@@ -1,0 +1,80 @@
+body {
+  font-family: monospace;
+  color: white;
+  background-color: #222;
+}
+
+a, a:visited {
+  color: white;
+}
+
+h1 {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.editor__block {
+  margin-bottom: 15px;
+}
+
+.editor__block textarea {
+  padding: 5px;
+}
+
+.editor__label {
+  margin-bottom: 5px;
+}
+
+.viewer {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.square {
+  width: 250px;
+  height: 250px;
+}
+
+.small {
+  width: 100px;
+  height: 100px;
+}
+
+.orange {
+  background-color: #e07a5f;
+}
+
+.yellow {
+  background-color: #f2cc8f;
+  margin-left: 50px;
+  margin-top: -50px;
+}
+
+.black {
+  background-color: #3d405b;
+  margin-left: 25px;
+}
+
+.green {
+  background-color: #81b29a;
+  margin-left: 50px;
+  margin-top: -25px;
+}
+
+.sand {
+  background-color: #f4f1de;
+  margin-left: 100px;
+  margin-top: -50px;
+}

@@ -23,10 +23,7 @@ h1 {
   display: flex;
   flex-direction: column;
   margin-right: 10px;
-}
-
-.editor__block {
-  margin-bottom: 15px;
+  justify-content: space-between;
 }
 
 .editor__block textarea {
@@ -48,33 +45,33 @@ h1 {
 }
 
 .small {
-  width: 100px;
-  height: 100px;
+  width: 125px;
+  height: 125px;
 }
 
-.orange {
-  background-color: #e07a5f;
+.purple {
+  background-color: #6a4c93;
 }
 
-.yellow {
-  background-color: #f2cc8f;
+.blue {
+  background-color: #1982c4;
   margin-left: 50px;
   margin-top: -50px;
 }
 
-.black {
-  background-color: #3d405b;
+.green {
+  background-color: #8ac926;
   margin-left: 25px;
 }
 
-.green {
-  background-color: #81b29a;
+.yellow {
+  background-color: #ffca3a;
   margin-left: 50px;
   margin-top: -25px;
 }
 
-.sand {
-  background-color: #f4f1de;
+.red {
+  background-color: #ff595e;
   margin-left: 100px;
   margin-top: -50px;
 }

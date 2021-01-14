@@ -9,30 +9,30 @@ import Html.Events
 
 
 type Square
-    = Orange
-    | Yellow
-    | Black
+    = Purple
+    | Blue
     | Green
-    | Sand
+    | Yellow
+    | Red
 
 
 squareToString : Square -> String
 squareToString square =
     case square of
-        Orange ->
-            "orange"
+        Purple ->
+            "purple"
 
-        Yellow ->
-            "yellow"
-
-        Black ->
-            "black"
+        Blue ->
+            "blue"
 
         Green ->
             "green"
 
-        Sand ->
-            "sand"
+        Yellow ->
+            "yellow"
+
+        Red ->
+            "red"
 
 
 type alias Model =
@@ -72,7 +72,7 @@ initialModel : Model
 initialModel =
     { inputs =
         Dict.fromList squareToString
-            [ ( Orange, "" ) ]
+            [ ( Purple, "" ) ]
     }
 
 
@@ -103,19 +103,19 @@ view model =
             ]
         , Html.main_ [ class "container" ]
             [ Html.section [ class "editor" ]
-                [ viewInputFor Orange model
-                , viewInputFor Yellow model
-                , viewInputFor Black model
+                [ viewInputFor Purple model
+                , viewInputFor Blue model
                 , viewInputFor Green model
-                , viewInputFor Sand model
+                , viewInputFor Yellow model
+                , viewInputFor Red model
                 ]
             , Html.section [ class "viewer" ]
-                [ Html.div [ class "square orange" ] []
-                , Html.div [ class "square yellow" ]
-                    [ Html.div [ class "small black" ] []
-                    , Html.div [ class "small green" ] []
+                [ Html.div [ class "square purple" ] []
+                , Html.div [ class "square blue" ]
+                    [ Html.div [ class "small green" ] []
+                    , Html.div [ class "small yellow" ] []
                     ]
-                , Html.div [ class "square sand" ] []
+                , Html.div [ class "square red" ] []
                 ]
             ]
         ]
@@ -133,7 +133,7 @@ viewInputFor square model =
     in
     Html.div [ class "editor__block" ]
         [ Html.div [ class "editor__label" ]
-            [ Html.label [] [ Html.text label ]
+            [ Html.label [] [ Html.text <| "." ++ label ]
             ]
         , Html.textarea
             [ Attr.value value

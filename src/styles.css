@@ -4,6 +4,11 @@ body {
   background-color: #222;
 }
 
+textarea {
+  font-family: monospace;
+  font-size: 13px;
+}
+
 a, a:visited {
   color: white;
 }
@@ -74,4 +79,23 @@ h1 {
   background-color: #ff595e;
   margin-left: 100px;
   margin-top: -50px;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .viewer {
+    margin: 0 10px 10px 10px;
+  }
+
+  .editor {
+    margin: 10px;
+  }
+
+  .editor__block {
+    margin-bottom: 10px;
+  }
 }

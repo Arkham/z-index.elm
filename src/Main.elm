@@ -300,14 +300,14 @@ cssRuleParser =
         |. P.spaces
         |= (P.getChompedString <|
                 P.succeed ()
-                    |. P.chompIf (\c -> Char.isAlpha c)
+                    |. P.chompIf (\_ -> True)
                     |. P.chompWhile (\c -> c /= ':')
            )
         |. P.symbol ":"
         |. P.spaces
         |= (P.getChompedString <|
                 P.succeed ()
-                    |. P.chompIf (\c -> Char.isAlpha c)
+                    |. P.chompIf (\_ -> True)
                     |. P.chompWhile (\c -> c /= ';')
            )
 
@@ -328,10 +328,7 @@ viewBoxFor square model attrs contents =
                 |> Maybe.withDefault ""
                 |> String.lines
                 |> List.filterMap
-                    (\line ->
-                        P.run cssRuleParser line
-                            |> Result.toMaybe
-                    )
+                    (P.run cssRuleParser >> Result.toMaybe)
                 |> List.map
                     (\(CssRule k v) ->
                         Attr.style k v

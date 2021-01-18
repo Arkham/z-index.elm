@@ -6,6 +6,7 @@ import Dict.Any as Dict exposing (AnyDict)
 import Html as Html exposing (Html)
 import Html.Attributes as Attr exposing (attribute, class)
 import Html.Events
+import Parser as P exposing ((|.), (|=), Parser)
 
 
 type Square
@@ -110,12 +111,14 @@ view model =
                 , viewInputFor Red model
                 ]
             , Html.section [ class "viewer" ]
-                [ Html.div [ class "square purple" ] []
-                , Html.div [ class "square blue" ]
-                    [ Html.div [ class "small green" ] []
-                    , Html.div [ class "small yellow" ] []
+                [ viewBoxFor Purple model [ class "square" ] []
+                , viewBoxFor Blue
+                    model
+                    [ class "square" ]
+                    [ viewBoxFor Green model [ class "small" ] []
+                    , viewBoxFor Yellow model [ class "small" ] []
                     ]
-                , Html.div [ class "square red" ] []
+                , viewBoxFor Red model [ class "square" ] []
                 ]
             ]
         ]
@@ -148,3 +151,57 @@ viewInputFor square model =
             ]
             []
         ]
+
+
+
+-- simple wrapper for a css rule
+
+
+type CssRule
+    = CssRule String String
+
+
+cssRuleParser : Parser CssRule
+cssRuleParser =
+    P.succeed CssRule
+        |. P.spaces
+        |= (P.getChompedString <|
+                P.succeed ()
+                    |. P.chompIf (\c -> Char.isAlpha c)
+                    |. P.chompWhile (\c -> c /= ':')
+           )
+        |. P.symbol ":"
+        |. P.spaces
+        |= (P.getChompedString <|
+                P.succeed ()
+                    |. P.chompIf (\c -> Char.isAlpha c)
+                    |. P.chompWhile (\c -> c /= ';')
+           )
+
+
+viewBoxFor :
+    Square
+    -> Model
+    -> List (Html.Attribute msg)
+    -> List (Html msg)
+    -> Html msg
+viewBoxFor square model attrs contents =
+    let
+        label =
+            squareToString square
+
+        styles =
+            Dict.get square model.inputs
+                |> Maybe.withDefault ""
+                |> String.lines
+                |> List.filterMap
+                    (\line ->
+                        P.run cssRuleParser line
+                            |> Result.toMaybe
+                    )
+                |> List.map
+                    (\(CssRule k v) ->
+                        Attr.style k v
+                    )
+    in
+    Html.div (class label :: styles ++ attrs) contents

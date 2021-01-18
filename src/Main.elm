@@ -191,23 +191,34 @@ update msg model =
             let
                 encoded =
                     Dict.toList model.inputs
-                        |> List.map
+                        |> List.filterMap
                             (\( square, value ) ->
-                                String.concat
-                                    [ squareToAbbrev square
-                                    , "+"
-                                    , value
-                                        |> String.replace ";" ""
-                                        |> String.replace "\n" ";"
-                                    ]
+                                if String.isEmpty value then
+                                    Nothing
+
+                                else
+                                    String.concat
+                                        [ squareToAbbrev square
+                                        , "+"
+                                        , value
+                                            |> String.replace ";" ""
+                                            |> String.replace "\n" ";"
+                                        ]
+                                        |> Just
                             )
                         |> String.join "|"
+
+                newUrl =
+                    Url.Builder.absolute []
+                        (if String.isEmpty encoded then
+                            []
+
+                         else
+                            [ Url.Builder.string "css" encoded ]
+                        )
             in
             ( model
-            , Navigation.replaceUrl model.key
-                (Url.Builder.absolute []
-                    [ Url.Builder.string "css" encoded ]
-                )
+            , Navigation.replaceUrl model.key newUrl
             )
 
         NoOp ->
